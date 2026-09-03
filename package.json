@@ -14,11 +14,14 @@
         "npm-check-updates": "^23.1.0",
         "playwright": "^1.62.1",
         "tailwindcss": "^4.3.3",
-        "vite-plus": "0.3.0",
-        "vite": "npm:@voidzero-dev/vite-plus-core@0.3.0"
+        "vite": "npm:@voidzero-dev/vite-plus-core@0.3.0",
+        "vite-plus": "0.3.0"
     },
     "overrides": {
         "vite": "npm:@voidzero-dev/vite-plus-core@0.3.0",
         "vitest": "4.1.11"
+    },
+    "dependencies": {
+        "alpinejs": "^3.17.1"
     }
 }
