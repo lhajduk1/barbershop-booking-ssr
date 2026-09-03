@@ -38,7 +38,7 @@ final class StoreUserRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'name' => $this->first_name . '' . $this->last_name,
+            'name' => $this->first_name.''.$this->last_name,
         ]);
     }
 }

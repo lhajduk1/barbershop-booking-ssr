@@ -18,8 +18,8 @@ final class LoginController
             return redirect()->intended('/dashboard');
         }
 
-        return redirect()->back()->withErrors([
-            'email' => 'The provided credentials do not match our records.'
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
 }

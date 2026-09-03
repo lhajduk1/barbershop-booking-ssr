@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -7,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class EmailVerificationController
+final class EmailVerificationController
 {
     public function notice(): View
     {
@@ -27,7 +29,7 @@ class EmailVerificationController
 
         return back()->with([
             'type' => 'success',
-            'message' => 'Verification link sent!'
+            'message' => 'Verification link sent!',
         ]);
     }
 }
