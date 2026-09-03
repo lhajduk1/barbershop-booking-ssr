@@ -11,4 +11,12 @@
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+    --font-display: 'Cormorant Garamond', ui-serif, Georgia, serif;
+
+    --color-ink-950: #080807;
+    --color-ink-900: #0f0e0c;
+    --color-gold-200: #f3dfa0;
+    --color-gold-300: #e8ca72;
+    --color-gold-400: #d4af37;
+    --color-gold-500: #b88a1e;
 }

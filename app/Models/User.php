@@ -43,6 +43,9 @@ final class User extends Authenticatable implements MustVerifyEmail
         return [
             'id' => 'string',
             'name' => 'string',
+            'first_name' => 'string',
+            'last_name' => 'string',
+            'phone' => 'string',
             'email' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
