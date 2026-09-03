@@ -20,3 +20,7 @@
     --color-gold-400: #d4af37;
     --color-gold-500: #b88a1e;
 }
+
+[x-cloak] {
+    display: none !important;
+}

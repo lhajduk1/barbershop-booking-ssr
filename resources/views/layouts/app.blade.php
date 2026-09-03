@@ -22,6 +22,10 @@
 </head>
 
 <body class="bg-ink-950 antialiased">
+    @if (session()->has('message'))
+        <x-status-message :type="session('type', 'info')" :message="session('message')" />
+    @endif
+
     @yield('content')
 </body>
 
