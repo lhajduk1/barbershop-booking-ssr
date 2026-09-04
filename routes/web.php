@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ Route::middleware(['auth'])
     });
 //
 
-Route::get('/', fn (): View => view('welcome'));
+Route::get('/', fn(): View => view('welcome'));
 
-Route::get('/dashboard', fn (): string => 'Dashboard')->middleware('auth', 'verified');
+Route::get('/dashboard', fn(): string => 'Dashboard')->middleware('auth', 'verified');
+
+Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
