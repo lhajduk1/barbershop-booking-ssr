@@ -17,6 +17,16 @@ final class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
+    }
+
     protected function casts()
     {
         return [

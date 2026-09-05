@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Booking;
+use App\Models\Employee;
 use App\Models\Service;
 use DateInterval;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,7 +24,6 @@ final class BookingFactory extends Factory
     public function definition(): array
     {
         $startsAt = fake()->dateTimeThisMonth();
-        $service = Service::factory()->create();
         $status = Arr::random([
             'pending',
             'completed',
@@ -32,13 +32,17 @@ final class BookingFactory extends Factory
 
         return [
             'user_id' => null,
+            'employee_id' => Employee::factory(),
+            'service_id' => Service::factory(),
             'status' => $status,
             'starts_at' => $startsAt,
-            'ends_at' => (clone $startsAt)->add(
-                DateInterval::createFromDateString($service->duration_minutes.' minutes')
+            'duration_minutes' => fn (array $attributes) => Service::query()->find($attributes['service_id'])->duration_minutes,
+            'ends_at' => fn (array $attributes) => (clone $attributes['starts_at'])->add(
+                DateInterval::createFromDateString(
+                    $attributes['duration_minutes'].' minutes'
+                )
             ),
-            'duration_minutes' => $service->duration_minutes,
-            'price_cents' => $service->price_cents,
+            'price_cents' => fn (array $attributes) => Service::query()->find($attributes['service_id'])->price_cents,
             'customer_first_name' => fake()->firstName(),
             'customer_last_name' => fake()->lastName(),
             'customer_email' => fake()->safeEmail(),

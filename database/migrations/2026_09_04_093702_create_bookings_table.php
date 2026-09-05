@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
+use App\Models\Employee;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +21,14 @@ return new class extends Migration
 
             $table->foreignIdFor(User::class, 'user_id')
                 ->nullable()
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignIdFor(Employee::class, 'employee_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignIdFor(Service::class, 'service_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
