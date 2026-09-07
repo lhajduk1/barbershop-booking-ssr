@@ -1,117 +1,164 @@
 @extends('layouts.app')
 
 @section('content')
-    <main lang="en" class="relative min-h-screen overflow-hidden bg-ink-950 text-stone-100">
+    <main lang="en" class="bg-ink-950 relative min-h-screen overflow-hidden text-stone-100">
         <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-            <div class="absolute -right-48 -top-48 size-144 rounded-full border border-gold-400/10"></div>
-            <div class="absolute -right-36 -top-36 size-112 rounded-full border border-gold-400/8"></div>
-            <div class="absolute left-1/4 top-0 h-96 w-px bg-linear-to-b from-gold-400/20 to-transparent"></div>
-            <div class="absolute -left-48 top-1/2 size-112 rounded-full bg-gold-500/5 blur-3xl"></div>
+            <div class="size-144 border-gold-400/10 absolute -right-48 -top-48 rounded-full border"></div>
+            <div class="size-112 border-gold-400/8 absolute -right-36 -top-36 rounded-full border"></div>
+            <div class="bg-linear-to-b from-gold-400/20 absolute left-1/4 top-0 h-96 w-px to-transparent"></div>
+            <div class="size-112 bg-gold-500/5 absolute -left-48 top-1/2 rounded-full blur-3xl"></div>
         </div>
 
-        <header class="relative border-b border-white/8">
+        <header class="border-white/8 relative border-b">
             <div class="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-5 sm:px-8 lg:px-10">
-                <a href="{{ url('/') }}" class="inline-flex min-w-0 items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-gold-300 transition hover:text-gold-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400 sm:text-sm">
-                    <span class="grid size-9 shrink-0 place-items-center border border-gold-400/50 bg-gold-400/5 sm:size-10" aria-hidden="true">
-                        <svg viewBox="0 0 32 32" fill="none" class="size-4 sm:size-5"><path d="M7 25 25 7M10 6l16 16M6 11l15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+                <a href="{{ url('/') }}" class="text-gold-300 hover:text-gold-200 focus-visible:outline-gold-400 inline-flex min-w-0 items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] transition focus-visible:outline-2 focus-visible:outline-offset-4 sm:text-sm">
+                    <span class="border-gold-400/50 bg-gold-400/5 grid size-9 shrink-0 place-items-center border sm:size-10" aria-hidden="true">
+                        <svg viewBox="0 0 32 32" fill="none" class="size-4 sm:size-5">
+                            <path d="M7 25 25 7M10 6l16 16M6 11l15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
                     </span>
                     <span class="wrap-anywhere">{{ config('app.name', 'Barbershop') }}</span>
                 </a>
-                <a href="{{ route('services.index') }}" class="shrink-0 border-b border-gold-400/40 pb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-300 transition hover:border-gold-300 hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400">Our services</a>
+                <a href="{{ route('services.index') }}" class="border-gold-400/40 hover:border-gold-300 hover:text-gold-300 focus-visible:outline-gold-400 shrink-0 border-b pb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-300 transition focus-visible:outline-2 focus-visible:outline-offset-4">Our services</a>
             </div>
         </header>
 
         <section class="relative mx-auto max-w-7xl px-5 pb-16 pt-12 sm:px-8 sm:pb-24 sm:pt-16 lg:px-10">
-            <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 text-xs font-medium text-stone-400 transition hover:text-gold-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400">
+            <a href="{{ route('services.index') }}" class="hover:text-gold-300 focus-visible:outline-gold-400 inline-flex items-center gap-2 text-xs font-medium text-stone-400 transition focus-visible:outline-2 focus-visible:outline-offset-4">
                 <span aria-hidden="true">&larr;</span> Back to services
             </a>
-            <div class="mt-9 h-px w-14 bg-gold-400"></div>
-            <p class="mt-6 text-xs font-semibold uppercase tracking-[0.32em] text-gold-400">Make time for yourself</p>
-            <h1 class="mt-4 font-display text-5xl leading-[0.95] text-stone-50 sm:text-6xl lg:text-7xl">Book your <span class="italic text-gold-300">appointment.</span></h1>
+            <div class="bg-gold-400 mt-9 h-px w-14"></div>
+            <p class="text-gold-400 mt-6 text-xs font-semibold uppercase tracking-[0.32em]">Make time for yourself</p>
+            <h1 class="font-display mt-4 text-5xl leading-[0.95] text-stone-50 sm:text-6xl lg:text-7xl">Book your <span class="text-gold-300 italic">appointment.</span></h1>
             <p class="mt-6 max-w-xl text-base leading-7 text-stone-400">Your next great look starts here. Choose your barber, find your moment and leave the rest to us.</p>
 
-            <div class="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12">
-                <div class="min-w-0 space-y-9" aria-label="Appointment details">
-                    <fieldset class="min-w-0" aria-describedby="barber-note">
-                        <legend class="font-display text-3xl"><span class="mr-3 align-middle font-sans text-xs tracking-[0.18em] text-gold-400">01</span> Choose your barber</legend>
-                        <p id="barber-note" class="mt-2 text-sm leading-6 text-stone-400">Example barber selection for preview.</p>
-                        <div class="mt-5 grid gap-3 sm:grid-cols-3">
-                            @foreach (['any' => ['No preference', 'Let us choose', '—'], 'james' => ['James', 'Barber', 'J'], 'oliver' => ['Oliver', 'Barber', 'O']] as $value => [$name, $caption, $initial])
+            <form action="{{ route('booking.store', $service) }}" method="POST">
+                @csrf
+                <div class="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12">
+                    <div class="min-w-0 space-y-9" aria-label="Appointment details">
+                        <fieldset class="min-w-0" aria-describedby="barber-note">
+                            <legend class="font-display text-3xl"><span class="text-gold-400 mr-3 align-middle font-sans text-xs tracking-[0.18em]">01</span> Choose your barber</legend>
+                            <p id="barber-note" class="mt-2 text-sm leading-6 text-stone-400">Example barber selection for preview.</p>
+                            <div class="mt-5 grid gap-3 sm:grid-cols-3">
                                 <label class="relative cursor-pointer">
-                                    <input type="radio" name="barber" value="{{ $value }}" @checked($loop->first) class="peer sr-only">
-                                    <span class="flex h-full items-center gap-4 border border-white/12 bg-ink-900 p-4 transition hover:border-gold-400/50 peer-checked:border-gold-400 peer-checked:bg-gold-400/8 peer-checked:[&_.selection-mark]:bg-gold-400 peer-checked:[&_.selection-mark]:border-gold-400 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-gold-400 sm:flex-col sm:items-start sm:p-5">
-                                        <span aria-hidden="true" class="grid size-10 shrink-0 place-items-center border border-gold-400/25 bg-gold-400/5 font-display text-2xl text-gold-300">{{ $initial }}</span>
-                                        <span class="block"><span class="block text-sm font-semibold text-stone-100">{{ $name }}</span><span class="mt-1 block text-xs text-stone-400">{{ $caption }}</span></span>
+                                    <input type="radio" name="employee_id" value="" @checked(!old('employee_id')) class="peer sr-only">
+                                    <span class="border-white/12 bg-ink-900 hover:border-gold-400/50 peer-checked:border-gold-400 peer-checked:bg-gold-400/8 peer-checked:[&_.selection-mark]:bg-gold-400 peer-checked:[&_.selection-mark]:border-gold-400 peer-focus-visible:outline-gold-400 flex h-full items-center gap-4 border p-4 transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 sm:flex-col sm:items-start sm:p-5">
+                                        <span aria-hidden="true" class="border-gold-400/25 bg-gold-400/5 font-display text-gold-300 grid size-10 shrink-0 place-items-center border text-2xl">N</span>
+                                        <span class="block"><span class="block text-sm font-semibold text-stone-100">No preferences</span><span class="mt-1 block text-xs text-stone-400">Let us choose</span></span>
                                         <span aria-hidden="true" class="selection-mark absolute right-4 top-4 size-2 rounded-full border border-stone-500"></span>
                                     </span>
                                 </label>
-                            @endforeach
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="min-w-0 border-t border-white/10 pt-8" aria-describedby="availability-note">
-                        <legend class="float-left w-full font-display text-3xl"><span class="mr-3 align-middle font-sans text-xs tracking-[0.18em] text-gold-400">02</span> Pick your moment</legend>
-                        <div class="clear-both grid gap-5 pt-5 sm:grid-cols-2">
-                            <div class="min-w-0">
-                                <label for="booking-date" class="block text-sm font-medium text-stone-200">Preferred date</label>
-                                <input id="booking-date" name="date" type="date" class="mt-2.5 block min-h-13 w-full min-w-0 rounded-none border border-white/12 bg-white/3 px-4 py-3.5 text-base text-stone-100 scheme-dark outline-none transition focus:border-gold-400 focus:bg-white/5 focus:ring-1 focus:ring-gold-400/40">
+                                @foreach ($employees as $employee)
+                                    <label class="relative cursor-pointer">
+                                        <input type="radio" name="employee_id" value="{{ $employee->id }}" @checked(old('employee_id') == $employee->id) class="peer sr-only">
+                                        <span class="border-white/12 bg-ink-900 hover:border-gold-400/50 peer-checked:border-gold-400 peer-checked:bg-gold-400/8 peer-checked:[&_.selection-mark]:bg-gold-400 peer-checked:[&_.selection-mark]:border-gold-400 peer-focus-visible:outline-gold-400 flex h-full items-center gap-4 border p-4 transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 sm:flex-col sm:items-start sm:p-5">
+                                            <span aria-hidden="true" class="border-gold-400/25 bg-gold-400/5 font-display text-gold-300 grid size-10 shrink-0 place-items-center border text-2xl">{{ substr($employee->first_name, 0, 1) }}</span>
+                                            <span class="block"><span class="block text-sm font-semibold text-stone-100">{{ $employee->first_name }}</span><span class="mt-1 block text-xs text-stone-400">Barber</span></span>
+                                            <span aria-hidden="true" class="selection-mark absolute right-4 top-4 size-2 rounded-full border border-stone-500"></span>
+                                        </span>
+                                    </label>
+                                @endforeach
                             </div>
-                            <div class="min-w-0">
-                                <label for="booking-time" class="block text-sm font-medium text-stone-200">Preferred time</label>
-                                <input id="booking-time" name="time" type="time" class="mt-2.5 block min-h-13 w-full min-w-0 rounded-none border border-white/12 bg-white/3 px-4 py-3.5 text-base text-stone-100 scheme-dark outline-none transition focus:border-gold-400 focus:bg-white/5 focus:ring-1 focus:ring-gold-400/40">
-                            </div>
-                        </div>
-                        <p id="availability-note" class="mt-3 text-xs leading-6 text-stone-400">Choose a preferred time. Live appointment availability is not connected yet.</p>
-                    </fieldset>
+                            @error('employee_id')
+                                <p id="employee-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                            @enderror
+                        </fieldset>
 
-                    <fieldset class="min-w-0 border-t border-white/10 pt-8">
-                        <legend class="float-left w-full font-display text-3xl"><span class="mr-3 align-middle font-sans text-xs tracking-[0.18em] text-gold-400">03</span> Your details</legend>
-                        <div class="clear-both grid gap-5 pt-5 sm:grid-cols-2">
-                            @foreach ([['first-name', 'first_name', 'First name', 'text', 'given-name', 'James'], ['last-name', 'last_name', 'Last name', 'text', 'family-name', 'Sullivan'], ['email', 'email', 'Email address', 'email', 'email', 'you@example.com'], ['phone', 'phone', 'Phone number', 'tel', 'tel', '+1 212 555 0142']] as [$id, $name, $label, $type, $autocomplete, $placeholder])
+                        <fieldset class="min-w-0 border-t border-white/10 pt-8" aria-describedby="availability-note">
+                            <legend class="font-display float-left w-full text-3xl"><span class="text-gold-400 mr-3 align-middle font-sans text-xs tracking-[0.18em]">02</span> Pick your moment</legend>
+                            <div class="clear-both grid gap-5 pt-5 sm:grid-cols-2">
                                 <div class="min-w-0">
-                                    <label for="booking-{{ $id }}" class="block text-sm font-medium text-stone-200">{{ $label }}</label>
-                                    <input id="booking-{{ $id }}" name="{{ $name }}" type="{{ $type }}" autocomplete="{{ $autocomplete }}" placeholder="{{ $placeholder }}" class="mt-2.5 block w-full rounded-none border border-white/12 bg-white/3 px-4 py-3.5 text-base text-stone-100 outline-none transition placeholder:text-stone-500 focus:border-gold-400 focus:bg-white/5 focus:ring-1 focus:ring-gold-400/40">
-                                </div>
-                            @endforeach
-                            <div class="sm:col-span-2">
-                                <label for="booking-notes" class="block text-sm font-medium text-stone-200">Anything we should know? <span class="font-normal text-stone-400">(optional)</span></label>
-                                <textarea id="booking-notes" name="notes" rows="3" placeholder="Your preferred style or any special requests…" class="mt-2.5 block w-full resize-y rounded-none border border-white/12 bg-white/3 px-4 py-3.5 text-base text-stone-100 outline-none transition placeholder:text-stone-500 focus:border-gold-400 focus:bg-white/5 focus:ring-1 focus:ring-gold-400/40"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
+                                    <label for="booking-date" class="block text-sm font-medium text-stone-200">Preferred date</label>
+                                    <input id="booking-date" name="date" type="date" value="{{ old('date') }}" class="min-h-13 border-white/12 bg-white/3 scheme-dark focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full min-w-0 rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition focus:bg-white/5 focus:ring-1">
 
-                <aside aria-labelledby="summary-heading" class="min-w-0 border border-gold-400/25 bg-ink-800 lg:sticky lg:top-8">
-                    <div class="h-1 bg-linear-to-r from-gold-500 via-gold-300 to-gold-500"></div>
-                    <div class="p-6 sm:p-8">
-                        <p id="summary-heading" class="text-xs font-semibold uppercase tracking-[0.24em] text-gold-300">Your appointment</p>
-                        <div aria-hidden="true" class="mt-8 grid size-12 place-items-center border border-gold-400/35 bg-gold-400/5 text-gold-300">
-                            <svg viewBox="0 0 32 32" fill="none" class="size-6"><path d="M7 25 25 7M10 6l16 16M6 11l15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+                                </div>
+                                <div class="min-w-0">
+                                    <label for="booking-time" class="block text-sm font-medium text-stone-200">Preferred time</label>
+                                    <input id="booking-time" name="time" type="time" value="{{ old('time') }}" class="min-h-13 border-white/12 bg-white/3 scheme-dark focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full min-w-0 rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition focus:bg-white/5 focus:ring-1">
+                                </div>
+                            </div>
+                            @error('starts_at')
+                                <p id="starts-at-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                            @enderror
+                            <p id="availability-note" class="mt-3 text-xs leading-6 text-stone-400">Choose a preferred time. Live appointment availability is not connected yet.</p>
+                        </fieldset>
+
+                        <fieldset class="min-w-0 border-t border-white/10 pt-8">
+                            <legend class="font-display float-left w-full text-3xl"><span class="text-gold-400 mr-3 align-middle font-sans text-xs tracking-[0.18em]">03</span> Your details</legend>
+                            <div class="clear-both grid gap-5 pt-5 sm:grid-cols-2">
+                                <div class="min-w-0">
+                                    <label for="booking-customer-first-name" class="block text-sm font-medium text-stone-200">First name</label>
+                                    <input id="booking-customer-first-name" name="customer_first_name" type="text" value="{{ old('customer_first_name') }}" autocomplete="customer_first_name" placeholder="" class="border-white/12 bg-white/3 focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition placeholder:text-stone-500 focus:bg-white/5 focus:ring-1">
+                                    @error('customer_first_name')
+                                        <p id="customer-first-name-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="min-w-0">
+                                    <label for="booking-customer-last-name" class="block text-sm font-medium text-stone-200">Last name</label>
+                                    <input id="booking-customer-last-name" name="customer_last_name" type="text" value="{{ old('customer_last_name') }}" autocomplete="customer_last_name" placeholder="" class="border-white/12 bg-white/3 focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition placeholder:text-stone-500 focus:bg-white/5 focus:ring-1">
+                                    @error('customer_last_name')
+                                        <p id="customer-last-name-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="min-w-0">
+                                    <label for="customer-email" class="block text-sm font-medium text-stone-200">E-mail address</label>
+                                    <input id="customer-email" name="customer_email" type="email" value="{{ old('customer_email') }}" autocomplete="customer_email" placeholder="" class="border-white/12 bg-white/3 focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition placeholder:text-stone-500 focus:bg-white/5 focus:ring-1">
+                                    @error('customer_email')
+                                        <p id="customer-mail-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="min-w-0">
+                                    <label for="customer-phone" class="block text-sm font-medium text-stone-200">Phone number</label>
+                                    <input id="customer-phone" name="customer_phone" type="text" value="{{ old('customer_phone') }}" autocomplete="customer_phone" placeholder="" class="border-white/12 bg-white/3 focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition placeholder:text-stone-500 focus:bg-white/5 focus:ring-1">
+                                    @error('customer_phone')
+                                        <p id="customer-phone-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label for="notes" class="block text-sm font-medium text-stone-200">Anything we should know? <span class="font-normal text-stone-400">(optional)</span></label>
+                                    <textarea id="notes" name="notes" rows="3" value="{{ old('notes') }}" placeholder="Your preferred style or any special requests…" class="border-white/12 bg-white/3 focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full resize-y rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition placeholder:text-stone-500 focus:bg-white/5 focus:ring-1"></textarea>
+                                    @error('notes')
+                                        <p id="notes-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <aside aria-labelledby="summary-heading" class="border-gold-400/25 bg-ink-800 min-w-0 border lg:sticky lg:top-8">
+                        <div class="bg-linear-to-r from-gold-500 via-gold-300 to-gold-500 h-1"></div>
+                        <div class="p-6 sm:p-8">
+                            <p id="summary-heading" class="text-gold-300 text-xs font-semibold uppercase tracking-[0.24em]">Your appointment</p>
+                            <div aria-hidden="true" class="border-gold-400/35 bg-gold-400/5 text-gold-300 mt-8 grid size-12 place-items-center border">
+                                <svg viewBox="0 0 32 32" fill="none" class="size-6">
+                                    <path d="M7 25 25 7M10 6l16 16M6 11l15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <h2 class="wrap-anywhere font-display mt-5 text-4xl leading-tight text-stone-100">{{ $service->name }}</h2>
+                            @if ($service->description)
+                                <p class="wrap-anywhere mt-4 text-sm leading-7 text-stone-400">{{ $service->description }}</p>
+                            @endif
+                            <dl class="mt-7 border-t border-white/10 pt-6">
+                                <div class="flex items-center justify-between gap-4 text-sm">
+                                    <dt class="text-stone-400">Duration</dt>
+                                    <dd class="text-stone-200">{{ $service->duration_minutes }} min</dd>
+                                </div>
+                                <div class="mt-6 flex flex-wrap items-end justify-between gap-3 border-t border-white/10 pt-6">
+                                    <dt class="pb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">Service price</dt>
+                                    <dd class="wrap-anywhere font-display text-gold-300 text-4xl"><span class="text-xl">$</span>{{ number_format($service->price_cents / 100, 2, ',', ' ') }}</dd>
+                                </div>
+                            </dl>
+                            <button type="submit" aria-describedby="booking-preview-note" class="bg-gold-400 text-ink-950 hover:bg-gold-300 focus-visible:outline-gold-400 mt-8 flex min-h-14 w-full items-center justify-center gap-3 px-4 py-4 text-xs font-bold uppercase tracking-[0.16em] transition focus-visible:outline-2 focus-visible:outline-offset-4">
+                                Confirm booking <span aria-hidden="true">&rarr;</span>
+                            </button>
+                            <p id="booking-preview-note" class="mt-4 text-center text-xs leading-6 text-stone-400">Online bookings are not active yet.<br>Your details will not be sent or saved.</p>
                         </div>
-                        <h2 class="mt-5 wrap-anywhere font-display text-4xl leading-tight text-stone-100">{{ $service->name }}</h2>
-                        @if ($service->description)
-                            <p class="mt-4 wrap-anywhere text-sm leading-7 text-stone-400">{{ $service->description }}</p>
-                        @endif
-                        <dl class="mt-7 border-t border-white/10 pt-6">
-                            <div class="flex items-center justify-between gap-4 text-sm">
-                                <dt class="text-stone-400">Duration</dt>
-                                <dd class="text-stone-200">{{ $service->duration_minutes }} min</dd>
-                            </div>
-                            <div class="mt-6 flex flex-wrap items-end justify-between gap-3 border-t border-white/10 pt-6">
-                                <dt class="pb-1 text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">Service price</dt>
-                                <dd class="wrap-anywhere font-display text-4xl text-gold-300"><span class="text-xl">$</span>{{ number_format($service->price_cents / 100, 2, ',', ' ') }}</dd>
-                            </div>
-                        </dl>
-                        <button type="button" aria-describedby="booking-preview-note" class="mt-8 flex min-h-14 w-full items-center justify-center gap-3 bg-gold-400 px-4 py-4 text-xs font-bold uppercase tracking-[0.16em] text-ink-950 transition hover:bg-gold-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-400">
-                            Confirm booking <span aria-hidden="true">&rarr;</span>
-                        </button>
-                        <p id="booking-preview-note" class="mt-4 text-center text-xs leading-6 text-stone-400">Online bookings are not active yet.<br>Your details will not be sent or saved.</p>
-                    </div>
-                    <div class="border-t border-gold-400/15 px-6 py-5 text-center sm:px-8">
-                        <p class="font-display text-xl italic text-gold-200/80">A little time. A lasting impression.</p>
-                    </div>
-                </aside>
-            </div>
+                        <div class="border-gold-400/15 border-t px-6 py-5 text-center sm:px-8">
+                            <p class="font-display text-gold-200/80 text-xl italic">A little time. A lasting impression.</p>
+                        </div>
+                    </aside>
+                </div>
+            </form>
         </section>
     </main>
 @endsection

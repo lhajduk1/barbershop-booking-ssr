@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function (): void {
     Route::view('/register', 'auth.register');
     Route::post('/register', RegisterController::class)->name('register');
-
     Route::view('/login', 'auth.login');
     Route::post('/login', LoginController::class)->name('login');
 });
@@ -40,3 +39,5 @@ Route::get('/dashboard', fn (): string => 'Dashboard')->middleware('auth', 'veri
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 
 Route::get('/services/{service}/book', [BookingController::class, 'create'])->name('booking.create');
+Route::post('/services/{service}/book', [BookingController::class, 'store'])->name('booking.store');
+Route::get('/bookings/thank-you', [BookingController::class, 'thankYou'])->name('booking.thank-you');
