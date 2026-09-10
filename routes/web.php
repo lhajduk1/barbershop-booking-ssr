@@ -44,3 +44,8 @@ Route::post('/services/{service}/book', [BookingController::class, 'store'])->na
 Route::get('/bookings/thank-you', [BookingController::class, 'thankYou'])->name('booking.thank-you');
 
 Route::get('employees/{employee}/availability', [AvailabilityController::class, 'index'])->name('employees.availability');
+
+// Admin
+Route::get('admin/login', fn (): string => 'Admin login')->middleware('guest')->name('admin.login');
+
+Route::get('admin', fn (): string => 'Admin panel')->middleware('admin')->name('admin.dashboard');
