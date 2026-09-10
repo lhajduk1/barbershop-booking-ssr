@@ -17,7 +17,9 @@ final class BookingController
 {
     public function create(Service $service): View
     {
-        $employees = Employee::query()->get();
+        $employees = Employee::query()
+            ->with('workingHours')
+            ->get();
 
         return view('bookings.create', [
             'service' => $service,
@@ -31,15 +33,14 @@ final class BookingController
 
         event(new BookingCreated($booking));
 
-        return redirect()
-            ->route('booking.thank-you')
+        return to_route('booking.thank-you')
             ->with('booking_created', true);
     }
 
     public function thankYou(Request $request): View|RedirectResponse
     {
         if ($request->session()->get('booking_created') !== true) {
-            return redirect()->route('services.index');
+            return to_route('services.index');
         }
 
         $request->session()->keep('booking_created');

@@ -17,6 +17,11 @@ final class Employee extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function workingHours(): HasMany
+    {
+        return $this->hasMany(WorkingHour::class);
+    }
+
     protected function casts()
     {
         return [

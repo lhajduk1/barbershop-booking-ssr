@@ -34,14 +34,14 @@
 
             <form action="{{ route('booking.store', $service) }}" method="POST">
                 @csrf
-                <div class="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12">
+                <div x-data="bookingForm({ employeeId: @js(old('employee_id', '')), date: @js(old('date', '')), time: @js(old('time', '')), urls: { @foreach ($employees as $employee) '{{ $employee->id }}': @js(route('employees.availability', $employee)), @endforeach } })" class="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12">
                     <div class="min-w-0 space-y-9" aria-label="Appointment details">
                         <fieldset class="min-w-0" aria-describedby="barber-note">
                             <legend class="font-display text-3xl"><span class="text-gold-400 mr-3 align-middle font-sans text-xs tracking-[0.18em]">01</span> Choose your barber</legend>
-                            <p id="barber-note" class="mt-2 text-sm leading-6 text-stone-400">Example barber selection for preview.</p>
+                            <p id="barber-note" class="mt-2 text-sm leading-6 text-stone-400">Choose a barber to see available appointments.</p>
                             <div class="mt-5 grid gap-3 sm:grid-cols-3">
-                                <label class="relative cursor-pointer">
-                                    <input type="radio" name="employee_id" value="" @checked(!old('employee_id')) class="peer sr-only">
+                                <label class="relative cursor-not-allowed opacity-40">
+                                    <input disabled type="radio" name="employee_id" value="" class="peer sr-only">
                                     <span class="border-white/12 bg-ink-900 hover:border-gold-400/50 peer-checked:border-gold-400 peer-checked:bg-gold-400/8 peer-checked:[&_.selection-mark]:bg-gold-400 peer-checked:[&_.selection-mark]:border-gold-400 peer-focus-visible:outline-gold-400 flex h-full items-center gap-4 border p-4 transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 sm:flex-col sm:items-start sm:p-5">
                                         <span aria-hidden="true" class="border-gold-400/25 bg-gold-400/5 font-display text-gold-300 grid size-10 shrink-0 place-items-center border text-2xl">N</span>
                                         <span class="block"><span class="block text-sm font-semibold text-stone-100">No preferences</span><span class="mt-1 block text-xs text-stone-400">Let us choose</span></span>
@@ -50,7 +50,7 @@
                                 </label>
                                 @foreach ($employees as $employee)
                                     <label class="relative cursor-pointer">
-                                        <input type="radio" name="employee_id" value="{{ $employee->id }}" @checked(old('employee_id') == $employee->id) class="peer sr-only">
+                                        <input x-model="employeeId" @change="loadAvailableDates()" required type="radio" name="employee_id" value="{{ $employee->id }}" @checked(old('employee_id') == $employee->id) class="peer sr-only">
                                         <span class="border-white/12 bg-ink-900 hover:border-gold-400/50 peer-checked:border-gold-400 peer-checked:bg-gold-400/8 peer-checked:[&_.selection-mark]:bg-gold-400 peer-checked:[&_.selection-mark]:border-gold-400 peer-focus-visible:outline-gold-400 flex h-full items-center gap-4 border p-4 transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 sm:flex-col sm:items-start sm:p-5">
                                             <span aria-hidden="true" class="border-gold-400/25 bg-gold-400/5 font-display text-gold-300 grid size-10 shrink-0 place-items-center border text-2xl">{{ substr($employee->first_name, 0, 1) }}</span>
                                             <span class="block"><span class="block text-sm font-semibold text-stone-100">{{ $employee->first_name }}</span><span class="mt-1 block text-xs text-stone-400">Barber</span></span>
@@ -66,21 +66,26 @@
 
                         <fieldset class="min-w-0 border-t border-white/10 pt-8" aria-describedby="availability-note">
                             <legend class="font-display float-left w-full text-3xl"><span class="text-gold-400 mr-3 align-middle font-sans text-xs tracking-[0.18em]">02</span> Pick your moment</legend>
-                            <div class="clear-both grid gap-5 pt-5 sm:grid-cols-2">
-                                <div class="min-w-0">
-                                    <label for="booking-date" class="block text-sm font-medium text-stone-200">Preferred date</label>
-                                    <input id="booking-date" name="date" type="date" value="{{ old('date') }}" class="min-h-13 border-white/12 bg-white/3 scheme-dark focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full min-w-0 rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition focus:bg-white/5 focus:ring-1">
-
-                                </div>
-                                <div class="min-w-0">
-                                    <label for="booking-time" class="block text-sm font-medium text-stone-200">Preferred time</label>
-                                    <input id="booking-time" name="time" type="time" value="{{ old('time') }}" class="min-h-13 border-white/12 bg-white/3 scheme-dark focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full min-w-0 rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none transition focus:bg-white/5 focus:ring-1">
-                                </div>
+                            <div class="clear-both pt-5" :aria-busy="loadingDates || loadingSlots">
+                                <label for="booking-date" class="block text-sm font-medium text-stone-200">Available date</label>
+                                <input id="booking-date" x-ref="datePicker" name="date" type="text" required disabled :disabled="loadingDates || !availableDates.length" placeholder="Choose a date" aria-describedby="availability-note" class="min-h-13 border-white/12 bg-white/3 focus:border-gold-400 focus:ring-gold-400/40 mt-2.5 block w-full min-w-0 rounded-none border px-4 py-3.5 text-base text-stone-100 outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50">
+                                <fieldset x-cloak x-show="availableSlots.length" class="mt-6">
+                                    <legend class="text-sm font-medium text-stone-200">Available times</legend>
+                                    <div class="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4">
+                                        <template x-for="slot in availableSlots" :key="slot">
+                                            <label class="relative cursor-pointer">
+                                                <input x-model="selectedTime" :value="slot" type="radio" name="time" required class="peer sr-only">
+                                                <span x-text="slot.slice(11, 16)" class="border-white/12 bg-ink-900 text-gold-300 hover:border-gold-400/60 peer-checked:bg-gold-400 peer-checked:text-ink-950 peer-checked:border-gold-400 peer-focus-visible:outline-gold-400 flex min-h-12 items-center justify-center border px-3 py-3 text-sm font-semibold transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4"></span>
+                                            </label>
+                                        </template>
+                                    </div>
+                                </fieldset>
                             </div>
                             @error('starts_at')
                                 <p id="starts-at-error" class="mt-2 text-sm text-red-400">{{ $message }}</p>
                             @enderror
-                            <p id="availability-note" class="mt-3 text-xs leading-6 text-stone-400">Choose a preferred time. Live appointment availability is not connected yet.</p>
+                            <p id="availability-note" role="status" aria-live="polite" x-text="status" class="mt-3 text-xs leading-6 text-stone-400">Choose a barber to see available appointments.</p>
+                            <button x-cloak x-show="error" type="button" class="text-gold-300 focus-visible:outline-gold-400 mt-3 text-sm underline underline-offset-4 focus-visible:outline-2" @click="retry()">Try again</button>
                         </fieldset>
 
                         <fieldset class="min-w-0 border-t border-white/10 pt-8">
@@ -148,10 +153,10 @@
                                     <dd class="wrap-anywhere font-display text-gold-300 text-4xl"><span class="text-xl">$</span>{{ number_format($service->price_cents / 100, 2, ',', ' ') }}</dd>
                                 </div>
                             </dl>
-                            <button type="submit" aria-describedby="booking-preview-note" class="bg-gold-400 text-ink-950 hover:bg-gold-300 focus-visible:outline-gold-400 mt-8 flex min-h-14 w-full items-center justify-center gap-3 px-4 py-4 text-xs font-bold uppercase tracking-[0.16em] transition focus-visible:outline-2 focus-visible:outline-offset-4">
+                            <button type="submit" disabled :disabled="!canSubmit" aria-describedby="booking-preview-note" class="bg-gold-400 text-ink-950 hover:bg-gold-300 focus-visible:outline-gold-400 mt-8 flex min-h-14 w-full items-center justify-center gap-3 px-4 py-4 text-xs font-bold uppercase tracking-[0.16em] transition focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-40">
                                 Confirm booking <span aria-hidden="true">&rarr;</span>
                             </button>
-                            <p id="booking-preview-note" class="mt-4 text-center text-xs leading-6 text-stone-400">Online bookings are not active yet.<br>Your details will not be sent or saved.</p>
+                            <p id="booking-preview-note" class="mt-4 text-center text-xs leading-6 text-stone-400">Choose a barber, date and time to complete your booking.</p>
                         </div>
                         <div class="border-gold-400/15 border-t px-6 py-5 text-center sm:px-8">
                             <p class="font-display text-gold-200/80 text-xl italic">A little time. A lasting impression.</p>

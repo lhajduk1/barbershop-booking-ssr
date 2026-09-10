@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Contracts\View\View;
@@ -41,3 +42,5 @@ Route::get('/services', [ServiceController::class, 'index'])->name('services.ind
 Route::get('/services/{service}/book', [BookingController::class, 'create'])->name('booking.create');
 Route::post('/services/{service}/book', [BookingController::class, 'store'])->name('booking.store');
 Route::get('/bookings/thank-you', [BookingController::class, 'thankYou'])->name('booking.thank-you');
+
+Route::get('employees/{employee}/availability', [AvailabilityController::class, 'index'])->name('employees.availability');

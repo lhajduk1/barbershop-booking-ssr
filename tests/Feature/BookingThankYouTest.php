@@ -33,7 +33,7 @@ it('redirects a successful booking and preserves the thank you page on refresh',
             ->assertDontSee('alex@example.test');
     }
 
-    expect(Booking::count())->toBe(1);
+    expect(Booking::query()->count())->toBe(1);
     Mail::assertSent(BookingCreatedMail::class, 1);
 });
 
@@ -62,6 +62,6 @@ it('keeps invalid bookings on the booking form', function (): void {
         ->assertSessionHasErrors(['starts_at', 'customer_email'])
         ->assertSessionMissing('booking_created');
 
-    expect(Booking::count())->toBe(0);
+    expect(Booking::query()->count())->toBe(0);
     Mail::assertNothingSent();
 });

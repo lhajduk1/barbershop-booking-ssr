@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Date;
 
 final class StoreBookingRequest extends FormRequest
 {
@@ -38,7 +37,7 @@ final class StoreBookingRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'starts_at' => $this->date && $this->time ? Date::parse($this->date.' '.$this->time)->format('Y-m-d H:i') : '',
+            'starts_at' => $this->time,
         ]);
     }
 
