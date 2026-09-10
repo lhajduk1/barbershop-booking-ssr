@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property-read string $id
@@ -35,6 +36,7 @@ final class User extends Authenticatable implements MustVerifyEmail
 
     use HasUuids;
     use Notifiable;
+    use HasRoles;
 
     /**
      * @return array<string, string>

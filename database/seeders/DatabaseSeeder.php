@@ -9,14 +9,39 @@ namespace Database\Seeders;
 use App\Models\Booking;
 use App\Models\Employee;
 use App\Models\Service;
+use App\Models\User;
 use App\Models\WorkingHour;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 final class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $adminRole = Role::create(['name' => 'admin']);
+        $employeeRole = Role::create(['name' => 'employee']);
+        $customerRole = Role::create(['name' => 'customer']);
+
+        $admin = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com'
+        ]);
+
+        $employee = User::factory()->create([
+            'name' => 'Employee',
+            'email' => 'employee@example.com'
+        ]);
+
+        $customer = User::factory()->create([
+            'name' => 'Customer',
+            'email' => 'customer@example.com'
+        ]);
+
+        $admin->assignRole($adminRole);
+        $employee->assignRole($employeeRole);
+        $customer->assignRole($customerRole);
+
         $services = Service::factory(20)->create();
         $employees = Employee::factory(9)->create();
 

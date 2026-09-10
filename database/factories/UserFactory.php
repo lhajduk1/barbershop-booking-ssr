@@ -18,8 +18,14 @@ final class UserFactory extends Factory
      */
     public function definition(): array
     {
+
+        $firstName = fake()->firstName();
+        $lastName = fake()->lastName();
         return [
-            'name' => fake()->name(),
+            'name' => $firstName . ' ' . $lastName,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => 'password',
@@ -29,7 +35,7 @@ final class UserFactory extends Factory
 
     public function unverified(): self
     {
-        return $this->state(fn (array $attributes): array => [
+        return $this->state(fn(array $attributes): array => [
             'email_verified_at' => null,
         ]);
     }
