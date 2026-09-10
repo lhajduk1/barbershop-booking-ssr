@@ -46,6 +46,6 @@ Route::get('/bookings/thank-you', [BookingController::class, 'thankYou'])->name(
 Route::get('employees/{employee}/availability', [AvailabilityController::class, 'index'])->name('employees.availability');
 
 // Admin
-Route::get('admin/login', fn (): string => 'Admin login')->middleware('guest')->name('admin.login');
+Route::view('admin/login', 'admin.login')->middleware('guest')->name('admin.login');
 
-Route::get('admin', fn (): string => 'Admin panel')->middleware('admin')->name('admin.dashboard');
+Route::view('admin', 'admin.dashboard')->middleware('admin')->name('admin.dashboard');

@@ -80,3 +80,42 @@
     border-bottom-color: #66522c;
     border-top-color: #66522c;
 }
+
+[data-admin-theme] {
+    --admin-bg: #080807;
+    --admin-surface: #12110e;
+    --admin-text: #f2eee5;
+    --admin-muted: #aaa497;
+    --admin-accent: #e8ca72;
+    --admin-border: #363126;
+    --admin-selected: #292313;
+    --admin-error: #fca5a5;
+    background: var(--admin-bg);
+    color-scheme: dark;
+}
+[data-admin-theme='light'] {
+    --admin-bg: #f5f2eb;
+    --admin-surface: #fffdf8;
+    --admin-text: #242017;
+    --admin-muted: #6e6556;
+    --admin-accent: #79580e;
+    --admin-border: #ddd5c6;
+    --admin-selected: #eee4cb;
+    --admin-error: #b42318;
+    color-scheme: light;
+}
+.admin-ui { background: var(--admin-bg); color: var(--admin-text); }
+.admin-surface { background: var(--admin-surface); }
+.admin-muted { color: var(--admin-muted); }
+.admin-accent, .admin-eyebrow { color: var(--admin-accent); }
+.admin-error { color: var(--admin-error); }
+.admin-selected { color: var(--admin-accent); background: var(--admin-selected); }
+.admin-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
+.admin-input { display: block; width: 100%; border: 1px solid var(--admin-border); background: var(--admin-surface); border-radius: 0; padding: 14px 16px; font-size: 16px; }
+.admin-input::placeholder { color: var(--admin-muted); }
+.admin-input[aria-invalid='true'] { border-color: var(--admin-error); }
+.admin-outline { border: 1px solid var(--admin-border); }
+.admin-outline:hover { background: var(--admin-selected); }
+.admin-button { min-height: 52px; padding: 16px 24px; background: #d4af37; color: #181208; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; }
+.admin-button:hover { background: #e8ca72; }
+.admin-ui :is(a, button, input):focus-visible { outline: 2px solid var(--admin-accent); outline-offset: 4px; }
