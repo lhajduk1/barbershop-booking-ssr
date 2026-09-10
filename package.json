@@ -12,17 +12,17 @@
         "concurrently": "^10.0.5",
         "laravel-vite-plugin": "^3.2.0",
         "npm-check-updates": "^23.1.0",
-        "playwright": "^1.62.1",
+        "playwright": "^1.63.0",
         "tailwindcss": "^4.3.3",
-        "vite": "npm:@voidzero-dev/vite-plus-core@0.3.0",
-        "vite-plus": "0.3.0"
+        "vite": "npm:@voidzero-dev/vite-plus-core@0.3.1",
+        "vite-plus": "0.3.1"
     },
     "overrides": {
-        "vite": "npm:@voidzero-dev/vite-plus-core@0.3.0",
+        "vite": "npm:@voidzero-dev/vite-plus-core@0.3.1",
         "vitest": "4.1.11"
     },
     "dependencies": {
-        "alpinejs": "^3.17.1",
+        "alpinejs": "^3.17.2",
         "flatpickr": "^4.6.13"
     }
 }
