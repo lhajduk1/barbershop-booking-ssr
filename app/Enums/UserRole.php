@@ -6,9 +6,9 @@ namespace App\Enums;
 
 enum UserRole: string
 {
-    public const ADMIN_ROLE = 'admin';
+    public const ADMIN = 'admin';
 
-    public const EMPLOYEE_ROLE = 'employee';
+    public const EMPLOYEE = 'employee';
 
-    public const CUSTOMER_ROLE = 'customer';
+    public const CUSTOMER = 'customer';
 }

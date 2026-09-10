@@ -20,9 +20,9 @@ final class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $adminRole = Role::create(['name' => UserRole::ADMIN_ROLE]);
-        $employeeRole = Role::create(['name' => UserRole::EMPLOYEE_ROLE]);
-        $customerRole = Role::create(['name' => UserRole::CUSTOMER_ROLE]);
+        $adminRole = Role::create(['name' => UserRole::ADMIN]);
+        $employeeRole = Role::create(['name' => UserRole::EMPLOYEE]);
+        $customerRole = Role::create(['name' => UserRole::CUSTOMER]);
 
         $admin = User::factory()->create([
             'name' => 'Admin',

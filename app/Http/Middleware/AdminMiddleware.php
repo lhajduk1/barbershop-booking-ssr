@@ -23,7 +23,7 @@ final class AdminMiddleware
             return to_route('admin.login');
         }
 
-        if (! Auth::user()->hasRole(UserRole::ADMIN_ROLE)) {
+        if (! Auth::user()->hasRole(UserRole::ADMIN)) {
             return redirect('/');
         }
 
