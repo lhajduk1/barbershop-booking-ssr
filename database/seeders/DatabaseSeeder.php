@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Enums\UserRole;
 use App\Models\Booking;
 use App\Models\Employee;
 use App\Models\Service;
@@ -19,23 +20,23 @@ final class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $adminRole = Role::create(['name' => 'admin']);
-        $employeeRole = Role::create(['name' => 'employee']);
-        $customerRole = Role::create(['name' => 'customer']);
+        $adminRole = Role::create(['name' => UserRole::ADMIN_ROLE]);
+        $employeeRole = Role::create(['name' => UserRole::EMPLOYEE_ROLE]);
+        $customerRole = Role::create(['name' => UserRole::CUSTOMER_ROLE]);
 
         $admin = User::factory()->create([
             'name' => 'Admin',
-            'email' => 'admin@example.com'
+            'email' => 'admin@example.com',
         ]);
 
         $employee = User::factory()->create([
             'name' => 'Employee',
-            'email' => 'employee@example.com'
+            'email' => 'employee@example.com',
         ]);
 
         $customer = User::factory()->create([
             'name' => 'Customer',
-            'email' => 'customer@example.com'
+            'email' => 'customer@example.com',
         ]);
 
         $admin->assignRole($adminRole);
