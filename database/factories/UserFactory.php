@@ -21,8 +21,9 @@ final class UserFactory extends Factory
 
         $firstName = fake()->firstName();
         $lastName = fake()->lastName();
+
         return [
-            'name' => $firstName . ' ' . $lastName,
+            'name' => $firstName.' '.$lastName,
             'first_name' => $firstName,
             'last_name' => $lastName,
             'phone' => fake()->phoneNumber(),
@@ -35,7 +36,7 @@ final class UserFactory extends Factory
 
     public function unverified(): self
     {
-        return $this->state(fn(array $attributes): array => [
+        return $this->state(fn (array $attributes): array => [
             'email_verified_at' => null,
         ]);
     }
