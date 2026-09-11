@@ -18,11 +18,10 @@ final class LoginController
 
             if ($request->user()->hasRole(UserRole::ADMIN)) {
                 return redirect()->intended('/admin');
-            };
+            }
 
             return redirect()->intended('/dashboard');
         }
-
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

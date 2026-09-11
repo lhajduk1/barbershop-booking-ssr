@@ -1,27 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Overview')
 @section('content')
-    <div class="min-h-screen lg:grid lg:grid-cols-[250px_minmax(0,1fr)]">
-        <aside class="admin-surface border-b border-[var(--admin-border)] lg:min-h-screen lg:border-b-0 lg:border-r">
-            <div class="flex items-center justify-between gap-3 p-6 lg:px-7 lg:py-9">
-                <x-admin-brand />
-                <button type="button" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-controls="admin-nav" class="admin-outline grid size-11 shrink-0 place-items-center lg:hidden" aria-label="Toggle navigation">☰</button>
-            </div>
-            <nav id="admin-nav" aria-label="Admin navigation" :class="{ 'hidden': !menuOpen }" class="hidden px-4 pb-6 lg:block lg:px-5 lg:pt-8">
-                <p class="admin-muted mb-4 px-3 text-[10px] font-semibold uppercase tracking-[0.2em]">Workspace</p>
-                <a href="{{ route('admin.dashboard') }}" aria-current="page" class="admin-selected flex min-h-12 items-center gap-3 border-l-2 border-current px-4 text-sm font-semibold"><span aria-hidden="true">▦</span> Overview</a>
-                @foreach (['Bookings', 'Services', 'Team'] as $section)
-                    <span aria-disabled="true" class="admin-muted mt-2 flex min-h-12 cursor-not-allowed items-center justify-between gap-2 px-4 text-sm">{{ $section }} <span class="text-[9px] uppercase tracking-wide">Coming soon</span></span>
-                @endforeach
-                <div class="mt-16 border-t border-[var(--admin-border)] px-3 pt-6"><p class="font-display text-xl italic">A cut above.</p><p class="admin-muted mt-2 text-xs leading-5">Thoughtful service.<br>Every single day.</p></div>
-            </nav>
-        </aside>
-        <div class="min-w-0">
-            <header class="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--admin-border)] px-6 py-5 lg:px-10">
-                <p class="admin-muted text-xs">Workspace <span class="mx-2 opacity-50">/</span> <span class="text-[var(--admin-text)]">Overview</span></p>
-                <div class="flex items-center gap-3"><x-admin-theme-toggle /><form action="{{ route('logout') }}" method="POST">@csrf<button class="admin-outline min-h-11 px-3 text-xs" type="submit">Sign out</button></form></div>
-            </header>
-            <main id="admin-main" class="mx-auto max-w-7xl px-6 py-10 lg:px-10 lg:py-14">
+    <x-admin-shell>
                 <div class="flex flex-wrap items-end justify-between gap-5">
                     <div><p class="admin-eyebrow">The daily edit</p><h1 class="mt-3 font-display text-5xl sm:text-6xl">Welcome back.</h1><p class="admin-muted mt-4 text-sm leading-6">A little overview of the day ahead.</p></div>
                     <span class="admin-selected border border-[var(--admin-border)] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em]">Demo data</span>
@@ -48,7 +28,5 @@
                     </ul>
                 </section>
                 <p class="admin-muted mt-8 text-xs">Considered care starts with the details.</p>
-            </main>
-        </div>
-    </div>
+    </x-admin-shell>
 @endsection

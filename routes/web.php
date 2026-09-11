@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -48,4 +49,11 @@ Route::get('employees/{employee}/availability', [AvailabilityController::class, 
 // Admin
 Route::view('admin/login', 'admin.login')->middleware('guest')->name('admin.login');
 
-Route::view('admin', 'admin.dashboard')->middleware('admin')->name('admin.dashboard');
+Route::middleware('admin')
+    ->prefix('admin')
+    ->as('admin.')
+    ->group(function (): void {
+        Route::view('/', 'admin.dashboard')->name('dashboard');
+
+        Route::resource('/services', AdminServiceController::class);
+    });
