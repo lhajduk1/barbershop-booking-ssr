@@ -47,18 +47,13 @@ final class DatabaseSeeder extends Seeder
         $employees = Employee::factory(9)->create();
 
         foreach ($employees as $employee) {
-            WorkingHour::factory()
-                ->recycle($employee)
-                ->startsAt(CarbonImmutable::yesterday()->setTime(20, 0))
-                ->create();
-            WorkingHour::factory()
-                ->recycle($employee)
-                ->startsAt(CarbonImmutable::today()->setTime(20, 0))
-                ->create();
-            WorkingHour::factory()
-                ->recycle($employee)
-                ->startsAt(CarbonImmutable::today()->addDay()->setTime(20, 0))
-                ->create();
+            for ($i = 0; $i < 7; $i++) {
+                WorkingHour::factory()
+                    ->recycle($employee)
+                    ->weekday($i)
+                    ->startsAt(CarbonImmutable::createFromTime(random_int(8, 14), 0, 0))
+                    ->create();
+            }
         }
 
         Booking::factory(10)
