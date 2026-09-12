@@ -23,8 +23,8 @@ final class WorkingHour extends Model
             'id' => 'integer',
             'employee_id' => 'integer',
             'weekday' => 'integer',
-            'starts_at' => 'datetime',
-            'ends_at' => 'datetime',
+            'starts_at' => 'string',
+            'ends_at' => 'string',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
