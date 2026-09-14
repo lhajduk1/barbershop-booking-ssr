@@ -39,8 +39,12 @@
                                 <tr class="{{ !$employee->is_active ? 'opacity-50' : '' }} group">
                                     <th scope="row" class="admin-surface font-display sticky left-0 z-10 border-b border-r border-[var(--admin-border)] px-6 py-7 text-2xl font-medium group-last:border-b-0">{{ $employee->name }}</th>
                                     @foreach ($employee->workingHours as $shift)
+                                        @php
+                                            $shift = $shift->workingHourOverride ?? $shift;
+
+                                        @endphp
                                         <td class="border-b border-[var(--admin-border)] px-4 py-7 text-center group-last:border-b-0">
-                                            <button type="button" aria-haspopup="dialog" aria-controls="schedule-edit-modal" class="{{ $shift === 'OFF' ? 'admin-muted border-dashed' : 'admin-selected' }} min-w-18 inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap border border-[var(--admin-border)] px-3 py-2 text-xs font-semibold tabular-nums transition-colors hover:border-[var(--admin-accent)] hover:bg-[var(--admin-selected)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--admin-accent)]" @click="open(@js($employee->name), @js($week[$shift->weekday]->format('d.m l')), @js(['start_time' => $shift->starts_at, 'end_time' => $shift->ends_at]), @js(route('admin.schedule.update', $employee)), @js($shift->weekday))"><span class="sr-only">Edit working hours for {{ $employee->name }}: </span>{{ $shift->period }}</button>
+                                            <button type="button" aria-haspopup="dialog" aria-controls="schedule-edit-modal" class="{{ !$shift->is_working ? 'admin-muted border-dashed' : 'admin-selected' }} min-w-18 inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap border border-[var(--admin-border)] px-3 py-2 text-xs font-semibold tabular-nums transition-colors hover:border-[var(--admin-accent)] hover:bg-[var(--admin-selected)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--admin-accent)]" @click="open(@js($employee->name), @js($week[$shift->weekday]), @js($week[$shift->weekday]->format('d.m l')), @js(['start_time' => $shift->start_time, 'end_time' => $shift->end_time]), @js(route('admin.schedule.update', $shift)), @js($shift->weekday))"><span class="sr-only">Edit working hours for {{ $employee->name }}: </span>{{ !$shift->is_working ? 'OFF' : $shift->period }}</button>
                                         </td>
                                     @endforeach
                                 </tr>
@@ -58,6 +62,8 @@
             <dialog id="schedule-edit-modal" x-ref="dialog" aria-labelledby="schedule-edit-title" class="admin-surface m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md overflow-y-auto border border-[var(--admin-border)] p-0 text-[var(--admin-text)] shadow-2xl backdrop:bg-black/70">
                 <form x-bind:action="url" method="POST">
                     @csrf
+                    @method('PUT')
+                    <input type="hidden" name="date" :value="date">
                     <div class="flex items-start justify-between gap-4 border-b border-[var(--admin-border)] p-6">
                         <div>
                             <p class="admin-eyebrow">Schedule</p>
@@ -78,7 +84,7 @@
                             </div>
                             <div>
                                 <dt class="admin-muted text-xs">Day</dt>
-                                <dd id="schedule-edit-day" x-text="date" class="mt-2 text-sm font-medium">—</dd>
+                                <dd id="schedule-edit-day" x-text="dateFormatted" class="mt-2 text-sm font-medium">—</dd>
                             </div>
                         </dl>
 

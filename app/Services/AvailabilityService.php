@@ -35,8 +35,8 @@ final class AvailabilityService
         $employee->loadMissing('workingHours');
 
         return $employee->workingHours->map(fn (WorkingHour $date): array => [
-            'starts_at' => $date->starts_at,
-            'ends_at' => $date->ends_at,
+            'starts_at' => $date->start_time,
+            'ends_at' => $date->end_time,
         ])->unique();
     }
 

@@ -27,8 +27,8 @@ final class WorkingHourFactory extends Factory
         return [
             'employee_id' => Employee::factory(),
             'weekday' => 1,
-            'starts_at' => $startsAt->format('H:i:s'),
-            'ends_at' => $startsAt->copy()->addHours(8)->format('H:i:s'),
+            'start_time' => $startsAt->format('H:i:s'),
+            'end_time' => $startsAt->copy()->addHours(8)->format('H:i:s'),
         ];
     }
 
@@ -42,8 +42,8 @@ final class WorkingHourFactory extends Factory
     public function startsAt(CarbonInterface $startsAt): static
     {
         return $this->state([
-            'starts_at' => $startsAt->format('H:i:s'),
-            'ends_at' => $startsAt->copy()->addHours(8)->format('H:i:s'),
+            'start_time' => $startsAt->format('H:i:s'),
+            'end_time' => $startsAt->copy()->addHours(8)->format('H:i:s'),
         ]);
     }
 }

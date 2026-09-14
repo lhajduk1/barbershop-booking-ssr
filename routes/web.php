@@ -58,6 +58,9 @@ Route::middleware('admin')
         Route::view('/', 'admin.dashboard')->name('dashboard');
 
         Route::resource('/services', AdminServiceController::class);
+
         Route::resource('/employees', AdminEmployeeController::class);
-        Route::resource('/schedule', AdminScheduleController::class);
+
+        Route::get('/schedule', [AdminScheduleController::class, 'index'])->name('schedule.index');
+        Route::put('/schedule/{schedule}', [AdminScheduleController::class, 'update'])->name('schedule.update');
     });
