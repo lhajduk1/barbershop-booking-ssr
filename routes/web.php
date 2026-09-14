@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Admin\AdminEmployeeController;
+use App\Http\Controllers\Admin\AdminScheduleController;
 use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
@@ -58,4 +59,5 @@ Route::middleware('admin')
 
         Route::resource('/services', AdminServiceController::class);
         Route::resource('/employees', AdminEmployeeController::class);
+        Route::resource('/schedule', AdminScheduleController::class);
     });

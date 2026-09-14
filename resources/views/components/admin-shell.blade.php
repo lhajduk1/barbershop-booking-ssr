@@ -11,6 +11,7 @@
         'admin.dashboard' => 'Overview',
         'admin.services.index' => 'Services',
         'admin.employees.index' => 'Employees',
+        'admin.schedule.index' => 'Schedule',
     ] as $route => $label)
                 <a href="{{ route($route) }}" @if ($active === $label) aria-current="page" @endif class="{{ $active === $label ? 'admin-selected border-current' : 'admin-muted border-transparent' }} mt-2 flex min-h-12 items-center gap-3 border-l-2 px-4 text-sm font-semibold">{{ $label }}</a>
             @endforeach
