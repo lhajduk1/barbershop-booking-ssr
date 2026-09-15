@@ -22,6 +22,6 @@ export default function scheduleModal() {
             this.data = '';
             this.url = '';
             this.$refs.dialog.close();
-        }
-    }
+        },
+    };
 }

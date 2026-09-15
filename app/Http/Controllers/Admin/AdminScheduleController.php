@@ -7,16 +7,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\AdminWorkingHourOverrideUpdateRequest;
 use App\Models\Employee;
 use App\Models\WorkingHour;
-use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Date;
 
 final class AdminScheduleController
 {
     public function index(): View
     {
         $employees = Employee::query()->with([
-            'workingHours' => fn($workingHours) => $workingHours->orderBy('weekday', 'ASC'),
+            'workingHours' => fn ($workingHours) => $workingHours->orderBy('weekday', 'ASC'),
             'workingHours.workingHourOverride',
         ])
             ->orderBy('is_active', 'DESC')
@@ -35,7 +35,7 @@ final class AdminScheduleController
         $schedule->workingHourOverride()
             ->updateOrCreate([
                 'working_hour_id' => $schedule->id,
-                'date' => Carbon::parse($data['date'])->startOfDay()->toDateTimeString(),
+                'date' => Date::parse($data['date'])->startOfDay()->toDateTimeString(),
             ], [
                 'start_time' => $data['start_time'],
                 'end_time' => $data['end_time'],
@@ -51,7 +51,7 @@ final class AdminScheduleController
 
     private function currentWeek(): array
     {
-        $date = Carbon::today();
+        $date = Date::today();
 
         $startOfWeek = $date->copy()->startOfWeek();
         $endOfWeek = $date->copy()->endOfWeek();

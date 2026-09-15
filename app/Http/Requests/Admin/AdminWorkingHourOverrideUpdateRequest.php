@@ -34,7 +34,7 @@ final class AdminWorkingHourOverrideUpdateRequest extends FormRequest
     protected function prepareForValidation()
     {
         return $this->merge([
-            'is_working' => $this->is_off ? false : true,
+            'is_working' => ! (bool) $this->is_off,
         ]);
     }
 }

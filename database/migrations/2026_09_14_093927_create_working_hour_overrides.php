@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('working_hour_overrides', function (Blueprint $table) {
+        Schema::create('working_hour_overrides', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignIdFor(WorkingHour::class, 'working_hour_id')
