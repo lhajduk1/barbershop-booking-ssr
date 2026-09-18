@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Admin\AdminemployeestoreRequest;
-use App\Http\Requests\Admin\AdminServiceUpdateRequest;
+use App\Http\Requests\Admin\AdminEmployeeStoreRequest;
+use App\Http\Requests\Admin\AdminEmployeeUpdateRequest;
 use App\Models\Employee;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -41,7 +41,7 @@ final class AdminEmployeeController
         ]);
     }
 
-    public function store(AdminemployeestoreRequest $request): RedirectResponse
+    public function store(AdminEmployeeStoreRequest $request): RedirectResponse
     {
         Employee::query()->create($request->validated());
 
@@ -52,7 +52,7 @@ final class AdminEmployeeController
             ]);
     }
 
-    public function update(AdminServiceUpdateRequest $request, Employee $employee): RedirectResponse
+    public function update(AdminEmployeeUpdateRequest $request, Employee $employee): RedirectResponse
     {
         $employee->update($request->validated());
 
