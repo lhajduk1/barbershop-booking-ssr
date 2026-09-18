@@ -7,7 +7,7 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Date;
 
-final class AdminWorkingHourOverrideUpdateRequest extends FormRequest
+final class ScheduleChangeWeekRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,18 +26,14 @@ final class AdminWorkingHourOverrideUpdateRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date'],
-            'start_time' => ['required', 'string'],
-            'end_time' => ['required', 'string'],
-            'is_working' => ['boolean'],
+            'type' => ['string', 'in:current,previous,next'],
         ];
     }
 
-    protected function prepareForValidation()
+    public function prepareForValidation()
     {
         return $this->merge([
-            'start_time' => Date::parse($this->start_time)->format('H:i:s'),
-            'end_time' => Date::parse($this->end_time)->format('H:i:s'),
-            'is_working' => ! (bool) $this->is_off,
+            'date' => Date::parse($this->date ?? Date::today()),
         ]);
     }
 }

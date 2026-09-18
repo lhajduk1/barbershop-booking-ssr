@@ -4,43 +4,24 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Admin\OverrideScheduleAction;
 use App\Http\Requests\Admin\AdminWorkingHourOverrideUpdateRequest;
-use App\Models\Employee;
+use App\Http\Requests\Admin\ScheduleChangeWeekRequest;
 use App\Models\WorkingHour;
+use App\Services\Admin\ScheduleService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Date;
 
 final class AdminScheduleController
 {
     public function index(): View
     {
-        $employees = Employee::query()->with([
-            'workingHours' => fn ($workingHours) => $workingHours->orderBy('weekday', 'ASC'),
-            'workingHours.workingHourOverride',
-        ])
-            ->orderBy('is_active', 'DESC')
-            ->get();
-
-        return view('admin.schedule.index', [
-            'employees' => $employees,
-            ...$this->currentWeek(),
-        ]);
+        return view('admin.schedule.index');
     }
 
-    public function update(AdminWorkingHourOverrideUpdateRequest $request, WorkingHour $schedule): RedirectResponse
+    public function override(AdminWorkingHourOverrideUpdateRequest $request, WorkingHour $workingHour, OverrideScheduleAction $action): RedirectResponse
     {
-        $data = $request->validated();
-
-        $schedule->workingHourOverride()
-            ->updateOrCreate([
-                'working_hour_id' => $schedule->id,
-                'date' => Date::parse($data['date'])->startOfDay()->toDateTimeString(),
-            ], [
-                'start_time' => $data['start_time'],
-                'end_time' => $data['end_time'],
-                'is_working' => $data['is_working'],
-            ]);
+        $action->handle($workingHour, $request->validated());
 
         return to_route('admin.schedule.index')
             ->with([
@@ -49,24 +30,10 @@ final class AdminScheduleController
             ]);
     }
 
-    private function currentWeek(): array
+    public function changeWeek(ScheduleChangeWeekRequest $request, ScheduleService $service)
     {
-        $date = Date::today();
+        $response = $service->getWeek(...$request->validated());
 
-        $startOfWeek = $date->copy()->startOfWeek();
-        $endOfWeek = $date->copy()->endOfWeek();
-        $current = $startOfWeek;
-        $week = [];
-
-        while ($current <= $endOfWeek) {
-            $week[] = $current;
-            $current = $current->copy()->addDay();
-        }
-
-        return [
-            'startOfWeek' => $startOfWeek,
-            'endOfWeek' => $endOfWeek,
-            'week' => $week,
-        ];
+        return response()->json($response);
     }
 }

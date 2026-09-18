@@ -34,7 +34,6 @@ Route::middleware(['auth'])
         Route::get('/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('signed')->name('verify');
         Route::post('/verification-notification', [EmailVerificationController::class, 'send'])->middleware('throttle:6,1')->name('send');
     });
-//
 
 Route::get('/', fn (): View => view('welcome'));
 
@@ -58,9 +57,9 @@ Route::middleware('admin')
         Route::view('/', 'admin.dashboard')->name('dashboard');
 
         Route::resource('/services', AdminServiceController::class);
-
         Route::resource('/employees', AdminEmployeeController::class);
 
         Route::get('/schedule', [AdminScheduleController::class, 'index'])->name('schedule.index');
-        Route::put('/schedule/{schedule}', [AdminScheduleController::class, 'update'])->name('schedule.update');
+        Route::get('/schedule/change-week', [AdminScheduleController::class, 'changeWeek'])->name('schedule.change-week');
+        Route::put('/schedule/{workingHour}', [AdminScheduleController::class, 'override'])->name('schedule.override');
     });

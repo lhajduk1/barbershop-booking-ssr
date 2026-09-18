@@ -1,27 +1,26 @@
 export default function scheduleModal() {
     return {
-        name: '',
-        date: '',
-        dateFormatted: '',
-        data: {},
-        url: '',
+        employeeName: '',
+        date: {},
+        shift: {},
 
-        open(name, date, dateFormatted, data, url) {
-            this.name = name;
+        open({ employeeName, date, shift }) {
+            this.employeeName = employeeName;
             this.date = date;
-            this.dateFormatted = dateFormatted;
-            this.data = data;
-            this.url = url;
+            this.shift = shift;
+
             this.$refs.dialog.showModal();
         },
 
         close() {
-            this.name = '';
-            this.date = '';
-            this.dateFormatted = '';
-            this.data = '';
-            this.url = '';
+            this.reset();
             this.$refs.dialog.close();
+        },
+
+        reset() {
+            this.employeeName = '';
+            this.date = {};
+            this.shift = {};
         },
     };
 }

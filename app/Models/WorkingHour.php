@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Date;
 
+#[Appends(['period', 'override_url'])]
 final class WorkingHour extends Model
 {
     use HasFactory;
@@ -20,9 +22,9 @@ final class WorkingHour extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public function workingHourOverride(): HasOne
+    public function workingHourOverrides(): HasMany
     {
-        return $this->hasOne(WorkingHourOverride::class);
+        return $this->hasMany(WorkingHourOverride::class);
     }
 
     protected function casts()
@@ -42,6 +44,13 @@ final class WorkingHour extends Model
     {
         return Attribute::make(
             get: fn (mixed $value, array $attributes): string => Date::createFromFormat('H:i:s', $attributes['start_time'])->format('H:i').'-'.Date::createFromFormat('H:i:s', $attributes['end_time'])->format('H:i')
+        );
+    }
+
+    protected function overrideUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): string => route('admin.schedule.override', $this)
         );
     }
 }
