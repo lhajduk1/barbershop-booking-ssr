@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignIdFor(WorkingHour::class, 'working_hour_id')
-                ->contrained()
+                ->constrained()
                 ->cascadeOnDelete();
 
             $table->unsignedInteger('weekday')->default(0);
