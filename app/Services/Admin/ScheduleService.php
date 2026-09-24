@@ -43,8 +43,8 @@ final class ScheduleService
         $startOfWeek = $date->startOfWeek();
 
         return match ($type) {
-            'previous' => $date->subWeek(),
-            'next' => $date->addWeek(),
+            'previous' => $startOfWeek->subWeek(),
+            'next' => $startOfWeek->addWeek(),
             default => $startOfWeek
         };
     }
@@ -54,10 +54,10 @@ final class ScheduleService
         return Employee::query()
             ->select('id', 'first_name', 'last_name', 'is_active')
             ->with([
-                'workingHours' => fn ($query) => $query
+                'workingHours' => fn($query) => $query
                     ->select('id', 'employee_id', 'weekday', 'start_time', 'end_time', 'is_working')
                     ->orderBy('weekday'),
-                'workingHours.workingHourOverrides' => fn ($query) => $query
+                'workingHours.workingHourOverrides' => fn($query) => $query
                     ->select('id', 'working_hour_id', 'weekday', 'date', 'start_time', 'end_time', 'is_working')
                     ->whereBetween('date', [$startOfWeek, $endOfWeek]),
             ])
@@ -67,7 +67,7 @@ final class ScheduleService
 
     private function schedule(Collection $query): Collection
     {
-        return $query->map(fn ($employee): array => [
+        return $query->map(fn($employee): array => [
             'id' => $employee->id,
             'name' => $employee->name,
             'is_active' => $employee->is_active,
@@ -77,6 +77,6 @@ final class ScheduleService
 
     private function weekLabel(CarbonInterface $startOfWeek, CarbonInterface $endOfWeek): string
     {
-        return $startOfWeek->format('d').'-'.$endOfWeek->format('d F Y');
+        return $startOfWeek->format('d') . '-' . $endOfWeek->format('d F Y');
     }
 }
