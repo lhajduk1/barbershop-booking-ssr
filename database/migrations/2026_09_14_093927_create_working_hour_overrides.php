@@ -21,7 +21,6 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->unsignedInteger('weekday')->default(0);
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');

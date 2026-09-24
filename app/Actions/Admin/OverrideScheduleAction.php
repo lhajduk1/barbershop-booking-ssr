@@ -19,7 +19,6 @@ final readonly class OverrideScheduleAction
             ->updateOrCreate([
                 'working_hour_id' => $workingHour->id,
                 'date' => Date::parse($data['date'])->startOfDay()->toDateTimeString(),
-                'weekday' => $workingHour->weekday,
             ], [
                 'start_time' => $data['start_time'],
                 'end_time' => $data['end_time'],
