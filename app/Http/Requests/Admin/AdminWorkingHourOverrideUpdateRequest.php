@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Date;
 
 final class AdminWorkingHourOverrideUpdateRequest extends FormRequest
 {
@@ -26,18 +25,23 @@ final class AdminWorkingHourOverrideUpdateRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date'],
-            'start_time' => ['required', 'string'],
-            'end_time' => ['required', 'string'],
+            'start_time' => ['required', 'date_format:H:i'],
+            'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
             'is_working' => ['boolean'],
         ];
     }
 
     protected function prepareForValidation()
     {
-        return $this->merge([
-            'start_time' => Date::parse($this->start_time)->format('H:i:s'),
-            'end_time' => Date::parse($this->end_time)->format('H:i:s'),
+        $this->merge([
+            'start_time' => $this->normalizeTime($this->input('start_time')),
+            'end_time' => $this->normalizeTime($this->input('end_time')),
             'is_working' => ! (bool) $this->is_off,
         ]);
+    }
+
+    private function normalizeTime(?string $time): ?string
+    {
+        return $time ? substr($time, 0, 5) : null;
     }
 }
