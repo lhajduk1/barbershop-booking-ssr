@@ -18,8 +18,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignIdFor(Employee::class)
-                ->constrained()
-                ->cascadeOnDelete();
+                ->constrained();
 
             $table->unsignedInteger('weekday')->default(0);
             $table->time('start_time');

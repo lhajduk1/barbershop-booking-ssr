@@ -25,12 +25,10 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->foreignIdFor(Employee::class, 'employee_id')
-                ->constrained()
-                ->cascadeOnDelete();
+                ->constrained();
 
             $table->foreignIdFor(Service::class, 'service_id')
-                ->constrained()
-                ->cascadeOnDelete();
+                ->constrained();
 
             $table->enum('status', ['pending', 'completed', 'cancelled'])
                 ->default('pending');
