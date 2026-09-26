@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Date;
 
 #[Appends(['period', 'override_url', 'weekday'])]
-final class WorkingHourOverride extends Model
+final class ScheduleOverride extends Model
 {
     use HasFactory;
 
-    public function workingHour(): BelongsTo
+    public function schedule(): BelongsTo
     {
-        return $this->belongsTo(WorkingHour::class);
+        return $this->belongsTo(Schedule::class);
     }
 
     protected function casts()
@@ -31,7 +31,7 @@ final class WorkingHourOverride extends Model
     protected function period(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes): string => Date::createFromTimeString($attributes['start_time'])->format('H:i') . '-' .
+            get: fn (mixed $value, array $attributes): string => Date::createFromTimeString($attributes['start_time'])->format('H:i').'-'.
                 Date::createFromTimeString($attributes['end_time'])->format('H:i')
         );
     }
@@ -39,14 +39,14 @@ final class WorkingHourOverride extends Model
     protected function overrideUrl(): Attribute
     {
         return Attribute::make(
-            get: fn(): string => route('admin.schedule.override', $this->workingHour)
+            get: fn (): string => route('admin.schedule.override', $this->schedule)
         );
     }
 
     protected function weekday(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes): int => Date::parse($attributes['date'])->dayOfWeekIso - 1
+            get: fn (mixed $value, array $attributes): int => Date::parse($attributes['date'])->dayOfWeekIso - 1
         );
     }
 }

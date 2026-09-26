@@ -18,7 +18,7 @@ final class BookingController
     public function create(Service $service): View
     {
         $employees = Employee::query()
-            ->with('workingHours')
+            ->with('schedules')
             ->get();
 
         return view('bookings.create', [

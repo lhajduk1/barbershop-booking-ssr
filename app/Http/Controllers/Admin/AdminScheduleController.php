@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Admin\OverrideScheduleAction;
-use App\Http\Requests\Admin\AdminWorkingHourOverrideUpdateRequest;
+use App\Http\Requests\Admin\AdminScheduleOverrideUpdateRequest;
 use App\Http\Requests\Admin\ScheduleChangeWeekRequest;
-use App\Models\WorkingHour;
+use App\Models\Schedule;
 use App\Services\Admin\ScheduleService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -19,9 +19,9 @@ final class AdminScheduleController
         return view('admin.schedule.index');
     }
 
-    public function override(AdminWorkingHourOverrideUpdateRequest $request, WorkingHour $workingHour, OverrideScheduleAction $action): RedirectResponse
+    public function override(AdminScheduleOverrideUpdateRequest $request, Schedule $schedule, OverrideScheduleAction $action): RedirectResponse
     {
-        $action->handle($workingHour, $request->validated());
+        $action->handle($schedule, $request->validated());
 
         return to_route('admin.schedule.index')
             ->with([

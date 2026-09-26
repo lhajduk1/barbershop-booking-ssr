@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Employee;
-use App\Models\WorkingHour;
+use App\Models\Schedule;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<WorkingHour>
+ * @extends Factory<Schedule>
  */
-final class WorkingHourFactory extends Factory
+final class ScheduleFactory extends Factory
 {
     /**
      * Define the model's default state.

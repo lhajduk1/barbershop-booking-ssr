@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Date;
 
 #[Appends(['period', 'override_url'])]
-final class WorkingHour extends Model
+final class Schedule extends Model
 {
     use HasFactory;
 
@@ -22,9 +22,9 @@ final class WorkingHour extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public function workingHourOverrides(): HasMany
+    public function scheduleOverrides(): HasMany
     {
-        return $this->hasMany(WorkingHourOverride::class);
+        return $this->hasMany(ScheduleOverride::class);
     }
 
     protected function casts()

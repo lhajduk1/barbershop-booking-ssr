@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Models\Employee;
+use App\Models\Schedule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,18 +14,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('working_hours', function (Blueprint $table): void {
+        Schema::create('schedule_overrides', function (Blueprint $table): void {
             $table->id();
 
-            $table->foreignIdFor(Employee::class)
-                ->constrained();
+            $table->foreignIdFor(Schedule::class, 'schedule_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-            $table->unsignedInteger('weekday')->default(0);
+            $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
             $table->boolean('is_working')->default(true);
 
-            $table->unique(['employee_id', 'weekday']);
+            $table->unique(['schedule_id', 'date']);
 
             $table->timestamps();
         });
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('working_hours');
+        Schema::dropIfExists('schedule_overrides');
     }
 };

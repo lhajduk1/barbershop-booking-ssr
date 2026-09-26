@@ -34,7 +34,7 @@ export default function scheduleChangeWeek(date) {
                 this.employees.forEach((employee) => {
                     employee.schedule.forEach((day) => {
                         day.override =
-                            day.working_hour_overrides.find(
+                            day.schedule_overrides.find(
                                 (item) =>
                                     item.date === this.week[item.weekday].date,
                             ) ?? null;

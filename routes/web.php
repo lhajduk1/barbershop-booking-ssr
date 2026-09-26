@@ -61,5 +61,5 @@ Route::middleware('admin')
 
         Route::get('/schedule', [AdminScheduleController::class, 'index'])->name('schedule.index');
         Route::get('/schedule/change-week', [AdminScheduleController::class, 'changeWeek'])->name('schedule.change-week');
-        Route::put('/schedule/{workingHour}', [AdminScheduleController::class, 'override'])->name('schedule.override');
+        Route::put('/schedule/{schedule}', [AdminScheduleController::class, 'override'])->name('schedule.override');
     });

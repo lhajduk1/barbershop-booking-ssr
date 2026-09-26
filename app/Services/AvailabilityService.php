@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Employee;
-use App\Models\WorkingHour;
+use App\Models\Schedule;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -32,9 +32,9 @@ final class AvailabilityService
 
     private function prepareDates(Employee $employee): Collection
     {
-        $employee->loadMissing('workingHours');
+        $employee->loadMissing('schedules');
 
-        return $employee->workingHours->map(fn (WorkingHour $date): array => [
+        return $employee->schedules->map(fn (Schedule $date): array => [
             'starts_at' => $date->start_time,
             'ends_at' => $date->end_time,
         ])->unique();

@@ -9,9 +9,9 @@ namespace Database\Seeders;
 use App\Enums\UserRole;
 use App\Models\Booking;
 use App\Models\Employee;
+use App\Models\Schedule;
 use App\Models\Service;
 use App\Models\User;
-use App\Models\WorkingHour;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -48,7 +48,7 @@ final class DatabaseSeeder extends Seeder
 
         foreach ($employees as $employee) {
             for ($i = 0; $i < 7; $i++) {
-                WorkingHour::factory()
+                Schedule::factory()
                     ->recycle($employee)
                     ->weekday($i)
                     ->startsAt(CarbonImmutable::createFromTime(random_int(8, 14), 0, 0))

@@ -22,9 +22,9 @@ final class Employee extends Model
         return $this->hasMany(Booking::class);
     }
 
-    public function workingHours(): HasMany
+    public function schedules(): HasMany
     {
-        return $this->hasMany(WorkingHour::class);
+        return $this->hasMany(Schedule::class);
     }
 
     protected function casts()

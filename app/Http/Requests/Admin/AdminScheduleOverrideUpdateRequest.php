@@ -6,7 +6,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-final class AdminWorkingHourOverrideUpdateRequest extends FormRequest
+final class AdminScheduleOverrideUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -42,6 +42,6 @@ final class AdminWorkingHourOverrideUpdateRequest extends FormRequest
 
     private function normalizeTime(?string $time): ?string
     {
-        return $time ? substr($time, 0, 5) : null;
+        return $time ? mb_substr($time, 0, 5) : null;
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\Admin;
 
-use App\Models\WorkingHour;
-use App\Models\WorkingHourOverride;
+use App\Models\Schedule;
+use App\Models\ScheduleOverride;
 use Illuminate\Support\Facades\Date;
 
 final readonly class OverrideScheduleAction
@@ -13,11 +13,11 @@ final readonly class OverrideScheduleAction
     /**
      * Execute the action.
      */
-    public function handle(WorkingHour $workingHour, array $data): WorkingHourOverride
+    public function handle(Schedule $schedule, array $data): ScheduleOverride
     {
-        return $workingHour->workingHourOverrides()
+        return $schedule->scheduleOverrides()
             ->updateOrCreate([
-                'working_hour_id' => $workingHour->id,
+                'schedule_id' => $schedule->id,
                 'date' => Date::parse($data['date'])->startOfDay()->toDateTimeString(),
             ], [
                 'start_time' => $data['start_time'],
