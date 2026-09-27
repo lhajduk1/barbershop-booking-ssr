@@ -51,15 +51,15 @@ final class DatabaseSeeder extends Seeder
             for ($i = 0; $i < 7; $i++) {
                 $startsAt = CarbonImmutable::createFromTime(random_int(8, 14), 0, 0);
 
-                Schedule::factory()
+                $schedule = Schedule::factory()
                     ->recycle($employee)
-                    ->recycle(
-                        ScheduleBreak::factory()
-                            ->startTime($startsAt->addHours(4))
-                            ->create()
-                    )
                     ->weekday($i)
                     ->startsAt($startsAt)
+                    ->create();
+
+                ScheduleBreak::factory()
+                    ->schedule($schedule->id)
+                    ->startTime($startsAt->addHours(4))
                     ->create();
             }
         }

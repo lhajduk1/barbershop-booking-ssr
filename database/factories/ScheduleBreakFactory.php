@@ -32,6 +32,13 @@ final class ScheduleBreakFactory extends Factory
         ];
     }
 
+    public function schedule(int $id): static
+    {
+        return $this->state([
+            'schedule_id' => $id,
+        ]);
+    }
+
     public function startTime(CarbonInterface $startTime): static
     {
         return $this->state([
