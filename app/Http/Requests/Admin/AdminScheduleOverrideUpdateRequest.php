@@ -31,7 +31,7 @@ final class AdminScheduleOverrideUpdateRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'start_time' => $this->normalizeTime($this->input('start_time')),
