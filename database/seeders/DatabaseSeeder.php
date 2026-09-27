@@ -10,6 +10,7 @@ use App\Enums\UserRole;
 use App\Models\Booking;
 use App\Models\Employee;
 use App\Models\Schedule;
+use App\Models\ScheduleBreak;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\CarbonImmutable;
@@ -48,10 +49,17 @@ final class DatabaseSeeder extends Seeder
 
         foreach ($employees as $employee) {
             for ($i = 0; $i < 7; $i++) {
+                $startsAt = CarbonImmutable::createFromTime(random_int(8, 14), 0, 0);
+
                 Schedule::factory()
                     ->recycle($employee)
+                    ->recycle(
+                        ScheduleBreak::factory()
+                            ->startTime($startsAt->addHours(4))
+                            ->create()
+                    )
                     ->weekday($i)
-                    ->startsAt(CarbonImmutable::createFromTime(random_int(8, 14), 0, 0))
+                    ->startsAt($startsAt)
                     ->create();
             }
         }
