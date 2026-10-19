@@ -27,6 +27,11 @@ final class Schedule extends Model
         return $this->hasMany(ScheduleOverride::class);
     }
 
+    public function scheduleBreaks(): HasMany
+    {
+        return $this->hasMany(ScheduleBreak::class);
+    }
+
     protected function casts()
     {
         return [

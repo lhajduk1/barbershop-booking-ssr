@@ -54,12 +54,18 @@ final class ScheduleService
         return Employee::query()
             ->select('id', 'first_name', 'last_name', 'is_active')
             ->with([
-                'schedules' => fn ($query) => $query
+                'schedules' => fn($query) => $query
                     ->select('id', 'employee_id', 'weekday', 'start_time', 'end_time', 'is_working')
                     ->orderBy('weekday'),
-                'schedules.scheduleOverrides' => fn ($query) => $query
+                'schedules.scheduleOverrides' => fn($query) => $query
                     ->select('id', 'schedule_id', 'date', 'start_time', 'end_time', 'is_working')
                     ->whereBetween('date', [$startOfWeek, $endOfWeek]),
+                'schedules.scheduleBreaks' => fn($query) => $query
+                    ->select('id', 'schedule_id', 'start_time', 'end_time')
+                    ->orderBy('start_time'),
+                'schedules.scheduleBreaks.scheduleBreakOverride' => fn($query) => $query
+                    ->select('id', 'schedule_break_id', 'date', 'start_time', 'end_time')
+                    ->orderBy('start_time'),
             ])
             ->orderBy('is_active', 'DESC')
             ->get();
@@ -67,7 +73,7 @@ final class ScheduleService
 
     private function schedule(Collection $query): Collection
     {
-        return $query->map(fn ($employee): array => [
+        return $query->map(fn($employee): array => [
             'id' => $employee->id,
             'name' => $employee->name,
             'is_active' => $employee->is_active,
@@ -77,6 +83,6 @@ final class ScheduleService
 
     private function weekLabel(CarbonInterface $startOfWeek, CarbonInterface $endOfWeek): string
     {
-        return $startOfWeek->format('d').'-'.$endOfWeek->format('d F Y');
+        return $startOfWeek->format('d') . '-' . $endOfWeek->format('d F Y');
     }
 }

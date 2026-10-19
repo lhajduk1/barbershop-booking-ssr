@@ -3,11 +3,13 @@ export default function scheduleModal() {
         employeeName: '',
         date: {},
         shift: {},
+        scheduleBreaks: {},
 
-        open({ employeeName, date, shift }) {
+        open({ employeeName, date, shift, scheduleBreaks }) {
             this.employeeName = employeeName;
             this.date = date;
             this.shift = shift;
+            this.scheduleBreaks = scheduleBreaks;
 
             this.$refs.dialog.showModal();
         },
@@ -21,6 +23,7 @@ export default function scheduleModal() {
             this.employeeName = '';
             this.date = {};
             this.shift = {};
+            this.scheduleBreaks = {};
         },
     };
 }
